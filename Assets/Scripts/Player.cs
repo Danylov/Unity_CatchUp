@@ -1,26 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody playerRb;
-    [SerializeField] private float plyerSpeed = 5.0f;
+    [SerializeField] private float playerSpeed = 5.0f;
     [SerializeField] private float powerUpStrength = 15.0f;
-    
-    void Start()
+    private FixedJoystick joystick;
+
+    private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        joystick = FindObjectOfType<FixedJoystick>();
     }
 
+    private void FixedUpdate()
+    {
+        playerRb.velocity = new Vector3(joystick.Horizontal * playerSpeed, playerRb.velocity.y,
+            joystick.Vertical * playerSpeed);
+    }
         
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Rigidbody enemyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-            Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
-            enemyRigidbody.AddForce(awayFromPlayer * powerUpStrength, ForceMode.Impulse);
+            Debug.Log("Game over!!!");
         }
     }
 }

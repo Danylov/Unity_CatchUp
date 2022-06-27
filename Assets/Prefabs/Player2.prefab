@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 206462374431158243}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &206462374431158243
@@ -123,3 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24041a0ead183141bb67cf4b9bb7e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpeed: 5
+  powerUpStrength: 15
+  joystick: {fileID: 5651852525557905782, guid: b6cec012fd61744459b24758fd20740d,
+    type: 3}

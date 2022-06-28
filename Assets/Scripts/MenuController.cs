@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] [Tooltip("Кнопка начала новой игры")] private GameObject buttonPlay;
+    [SerializeField] [Tooltip("Панель начала новой игры")] private GameObject panelPlay;
     [SerializeField] [Tooltip("Панель рестарта игры после проигрыша")] private GameObject panelLost;
     [SerializeField] [Tooltip("Панель начала следующего уровня игры после выигрыша")] private GameObject panelWin;
     private SpawnManager spawnManager;
@@ -14,14 +16,15 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("MenuController.Start()"); // Отладка
         spawnManager = FindObjectOfType<SpawnManager>();
         cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-        buttonPlay.SetActive(true);
+        panelPlay.SetActive(true);
     }
 
     public void buttonPlayClick()
     {
-        buttonPlay.SetActive(false);
+        panelPlay.SetActive(false);
         spawnManager.StartGame();
     }
 
@@ -45,7 +48,7 @@ public class MenuController : MonoBehaviour
 
     public void ShowButtonPlay()
     {
-        buttonPlay.SetActive(true);
+        panelPlay.SetActive(true);
     }
 
     public void ShowPanelLost()
@@ -57,12 +60,17 @@ public class MenuController : MonoBehaviour
 
     private void RestartLevel()
     {
-        
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
     
     private void NextLevel()
     {
-        
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings) nextSceneIndex = 0;
+        var numLevel = nextSceneIndex + 1;
+        SceneManager.LoadScene(nextSceneIndex);
     }
     
     public void KillEnemy()
@@ -73,7 +81,6 @@ public class MenuController : MonoBehaviour
     
     private void DestroySpawnedObjects()
     {
-        Debug.Log("DestroySpawnedObjects()"); // Отладка
         spawnManager.StopSpawnEnemies();
         foreach (Transform child in spawnManager.transform) Destroy(child.gameObject);
     }

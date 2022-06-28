@@ -22,7 +22,6 @@ public class SpawnManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("StartGame()"); // Отладка
         SpawnPlayer();
         SpawnCatcher();
         coroutineSpawnEnemies = SpawnEnemies();
@@ -46,7 +45,6 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            Debug.Log("SpawnEnemies()"); // Отладка
             GameObject enemy = Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
             enemy.transform.SetParent(transform);
             yield return new WaitForSeconds(deltaTimeEnemySpawn);
@@ -63,7 +61,6 @@ public class SpawnManager : MonoBehaviour
 
     public void StopSpawnEnemies()
     {
-        Debug.Log("StopSpawnEnemies()"); // Отладка
         StopCoroutine(coroutineSpawnEnemies);
     }
 }

@@ -1,20 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
     private Rigidbody enemyRb;
-    private GameObject player;
-    [SerializeField] private float enemySpeed = 3.0f;
+    private Player player;
+    [Header("Настройки противника")] 
+    [SerializeField] [Tooltip("Скорость противника")] private float enemySpeed = 3.0f;
     
-    void Start()
+    private void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = FindObjectOfType<Player>();
     }
 
-    void Update()
+    private void Update()
     {
         Vector3  lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * enemySpeed);

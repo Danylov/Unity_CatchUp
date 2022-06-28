@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
+﻿using Cinemachine;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
+[RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
     private Rigidbody playerRb;
-    [SerializeField] private float playerSpeed = 5.0f;
-    [SerializeField] private float powerUpStrength = 15.0f;
     private CinemachineVirtualCamera cinemachineVirtualCamera;
     private FixedJoystick joystick;
+    private MenuController menuController;
+    [Header("Настройки игрока")] 
+    [SerializeField] [Tooltip("Скорость игрока")] private float playerSpeed = 5.0f;
 
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         joystick = FindObjectOfType<FixedJoystick>();
+        menuController = FindObjectOfType<MenuController>();
         cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
         cinemachineVirtualCamera.Follow = transform;
     }
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Game over!!!");
+            menuController.ShowPanelLost();
         }
     }
 }
